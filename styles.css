@@ -46,6 +46,8 @@ button {
     border: 0;
     font-size: 24px;
     background-color: rgb(110, 169, 224);
+    text-align: center;
+    color: black;
 }
 
 button:hover {
