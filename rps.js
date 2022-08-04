@@ -1,6 +1,10 @@
 let playerWins = 0;
 let computerWins = 0;
-
+let roundScore = document.getElementById('round-score');
+let playerScore = document.getElementById('player-score');
+let computerScore = document.getElementById('computer-score');
+let finalWinner = document.getElementById('final-winner');
+let totalRounds = 0;
 
 function getComputerChoice() {
     let num = Math.floor(Math.random()*3);
@@ -63,21 +67,49 @@ function playRound(playerSelection, computerSelection) {
     }
 }
 
-function game() {
-    for (let i = 0; i < 5; i++) {
-        let playerSelection = prompt().toLowerCase()
-        let result = playRound(playerSelection, getComputerChoice());
-        console.log(result);
+function setSelection(e) {
+    if (e == 'rock') {
+        return 'rock';
+        // console.log(playerSelection);
+        
     }
-    if (playerWins > computerWins) {
-        console.log("You Win! You're Score: " + playerWins);
+    else if (e == 'paper') {
+        return 'paper';
     }
-    else if (playerWins < computerWins) {
-        console.log("You Lose! You're Score: " + playerWins);
-    }
-    else {
-        console.log("Tie! You're Score: " + playerWins);
+    else if (e == 'scissors') {
+        return 'scissors';
     }
 }
 
-game();
+function game(e) {
+    
+    let playerSelection = setSelection(this.classList.value);
+    let computerSelection = getComputerChoice();
+
+    let roundResult = playRound(playerSelection, computerSelection);
+    roundScore.textContent = roundResult;
+    playerScore.textContent = playerWins;
+    computerScore.textContent = computerWins;
+    totalRounds++;
+    if (totalRounds == 5) {
+        if (playerWins > computerWins) {
+            finalWinner.textContent = 'You Win!!';
+        }
+        else if (playerWins < computerWins) {
+            finalWinner.textContent = 'You Lose!!';
+        }
+        else {
+            finalWinner.textContent = "It's a Tie!!";
+        }
+    }
+    
+}
+
+function main() {
+    
+    const buttons = document.querySelectorAll('button');
+    buttons.forEach(button => button.addEventListener('click', game));
+    
+}
+
+main();
